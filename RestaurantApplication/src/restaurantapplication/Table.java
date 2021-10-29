@@ -2,7 +2,7 @@ package restaurantapplication;
 
 /*
 
-This class represents the tables in the restaurant where customers will be seated and served at.
+This class represents the individual tables in the restaurant where customers will be seated and served at.
 
 */
 
@@ -10,10 +10,10 @@ public class Table {
     
     /* INITIALIZE VARIABLES */
     
-    int tableNumber;
-    int maximumCapacity;
-    int currentCapacity;
-    boolean isClean;
+    private int tableNumber;
+    private int maximumCapacity;
+    private int currentCapacity;
+    private boolean isClean;
     
     /* CONSTRUCTORS */
     
@@ -22,6 +22,15 @@ public class Table {
         this.tableNumber = tableNumber;
         this.maximumCapacity = maximumCapacity;
         this.currentCapacity = 0;
+        this.isClean = true;
+        
+    }
+    
+    public Table(int tableNumber, int maximumCapacity, int currentCapacity, boolean isClean) {
+        
+        this.tableNumber = tableNumber;
+        this.maximumCapacity = maximumCapacity;
+        this.currentCapacity = currentCapacity;
         this.isClean = true;
         
     }
