@@ -15,15 +15,21 @@ public class RestaurantModel {
 
     /* INITIALIZE VARIABLES */
 	
+	private final String TABLES_FILENAME;
+	private final String EMPLOYEES_FILENAME;
+	
 	private HashMap<Integer, Table> tablesMap = new HashMap<Integer, Table>();
 	private HashMap<Integer, Employee> employeesMap = new HashMap<Integer, Employee>();
 	
     /* CONSTRUCTORS */
 	
     public RestaurantModel(String tablesFilename, String employeesFilename) {
+    	
+    	TABLES_FILENAME = tablesFilename;
+    	EMPLOYEES_FILENAME = employeesFilename;
         
-        loadTables(tablesFilename);
-        loadEmployees(employeesFilename);
+        loadTables();
+        loadEmployees();
         
         //TESTING CODE - print out hashmaps
         
@@ -39,20 +45,38 @@ public class RestaurantModel {
             
         }
         
+        Table tableone = tablesMap.get(1);
+        
+        tableone.setCurrentCapacity(0);
+        
+        updateTables();
+        
+        for(Entry<Integer, Table> entry : tablesMap.entrySet()) {
+
+            System.out.println(entry.getValue().toString());
+            
+        }
+        
     }
     
     /* CLASS METHODS */
     
-    private void loadTables(String filename) {
+    private void loadTables() {
+    	
+    	//Initialize variables
     	
     	String row = "";  
         String splitBy = ",";  
         
+        //Clear hashmap
+        
         tablesMap.clear();
+        
+        //Extract data from the CSV file
         
         try {  
             
-            BufferedReader reader = new BufferedReader(new FileReader(filename));  
+            BufferedReader reader = new BufferedReader(new FileReader(TABLES_FILENAME));  
             
             reader.readLine();
             
@@ -79,7 +103,7 @@ public class RestaurantModel {
             
             reader.close();
             
-        } catch (IOException e) {  
+        } catch (Exception e) {  
             
             e.printStackTrace();  
             
@@ -87,16 +111,22 @@ public class RestaurantModel {
         
     }
     
-    private void loadEmployees(String filename) {
+    private void loadEmployees() {
+    	
+    	//Initialize variables
     	
     	String row = "";  
         String splitBy = ",";  
         
+        //Clear hashmap
+        
         employeesMap.clear();
+        
+        //Extract data from the CSV file
         
         try {  
             
-            BufferedReader reader = new BufferedReader(new FileReader(filename)); 
+            BufferedReader reader = new BufferedReader(new FileReader(EMPLOYEES_FILENAME)); 
             
             reader.readLine();
             
@@ -123,7 +153,7 @@ public class RestaurantModel {
             
             reader.close();
             
-        } catch (IOException e) {  
+        } catch (Exception e) {  
             
             e.printStackTrace();  
             
@@ -147,6 +177,68 @@ public class RestaurantModel {
     
     /* MUTATORS */
     
+    public void updateTables() {
+    	
+    	//Initialize variables
 
-	
+        StringBuilder newData = new StringBuilder();
+        
+        //Add header row to new data
+        
+        newData.append("number,maximumcapacity,currentcapacity,clean\n");
+        
+        //Add each Table's data to the new data
+        
+        for(Entry<Integer, Table> entry : tablesMap.entrySet()) {
+        	
+        	Table t = entry.getValue();
+        	
+        	newData.append(t.getNumber() + "," + t.getMaximumCapacity() + "," + t.getCurrentCapacity() + "," + t.isClean() + "\n");
+        	
+        }
+        
+        try (PrintWriter writer = new PrintWriter(TABLES_FILENAME)) {
+        	
+        	writer.write(newData.toString());
+        	
+        } catch (Exception e) {  
+            
+            e.printStackTrace();  
+            
+        }  
+
+    }
+    
+    public void updateEmployees() {
+    	
+    	//Initialize variables
+
+        StringBuilder newData = new StringBuilder();
+        
+        //Add header row to new data
+        
+        newData.append("id,firstname,lastname,position\n");
+        
+        //Add each Table's data to the new data
+        
+        for(Entry<Integer, Employee> entry : employeesMap.entrySet()) {
+        	
+        	Employee e = entry.getValue();
+        	
+        	newData.append(e.getId() + "," + e.getFirstname() + "," + e.getLastname() + "," + e.getPosition() + "\n");
+        	
+        }
+        
+        try (PrintWriter writer = new PrintWriter(EMPLOYEES_FILENAME)) {
+        	
+        	writer.write(newData.toString());
+        	
+        } catch (Exception e) {  
+            
+            e.printStackTrace();  
+            
+        }  
+
+    }
+
 }
