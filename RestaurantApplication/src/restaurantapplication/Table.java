@@ -95,4 +95,15 @@ public class Table {
         
     }
     
+    /* TOSTRING METHOD */
+    
+    @Override
+    public String toString() {
+    	
+    	String s = "Table #" + tableNumber + " : " + currentCapacity + "/" + maximumCapacity;
+    	
+    	return s;
+    	
+    }
+    
 }

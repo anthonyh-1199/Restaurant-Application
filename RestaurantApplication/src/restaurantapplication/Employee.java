@@ -73,5 +73,16 @@ public class Employee {
     	this.employeePosition = employeePosition;
     	
     }
+    
+    /* TOSTRING METHOD */
+    
+    @Override
+    public String toString() {
+    	
+    	String s = "Employee #" + employeeId + " : " + employeeFirstname + " " + employeeLastname + " - " + employeePosition;
+    	
+    	return s;
+    	
+    }
 
 }
