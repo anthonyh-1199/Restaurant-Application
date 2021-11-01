@@ -1,0 +1,16 @@
+number,maximumcapacity,currentcapacity,clean
+1,4,0,TRUE
+2,4,0,TRUE
+3,4,0,TRUE
+4,4,0,TRUE
+5,2,0,TRUE
+6,2,0,TRUE
+7,2,0,TRUE
+8,2,0,TRUE
+9,2,0,TRUE
+10,4,0,TRUE
+11,4,0,TRUE
+12,4,0,TRUE
+13,4,0,TRUE
+14,8,0,TRUE
+15,8,0,TRUE
