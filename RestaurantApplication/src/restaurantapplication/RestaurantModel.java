@@ -6,8 +6,11 @@ import java.io.*;
 
 /*
 
-This class contains a hashmap that contains the individual tables in the restaurant where customers will be seated and served at,
-as well as a hashmap that contains the individual employees that work in the restaurant
+  This class contains several data structures that represent key items in the restaurant, this includes:
+  
+  - a hashmap representing the tables in the restaurant where customers are seated and served at
+  - a hashmap representing the individual employees that work in the restaurant
+  - a hashmap representing the orders that are given and prepared by the kitchen
 
 */
 
@@ -17,19 +20,23 @@ public class RestaurantModel {
 	
 	private final String TABLES_FILENAME;
 	private final String EMPLOYEES_FILENAME;
+	private final String ORDERS_FILENAME;
 	
 	private HashMap<Integer, Table> tablesMap = new HashMap<Integer, Table>();
 	private HashMap<Integer, Employee> employeesMap = new HashMap<Integer, Employee>();
+	private HashMap<Integer, Order> ordersMap = new HashMap<Integer, Order>();
 	
     /* CONSTRUCTORS */
 	
-    public RestaurantModel(String tablesFilename, String employeesFilename) {
+    public RestaurantModel(String tablesFilename, String employeesFilename, String ordersFilename) {
     	
     	TABLES_FILENAME = tablesFilename;
     	EMPLOYEES_FILENAME = employeesFilename;
+    	ORDERS_FILENAME = ordersFilename;
         
         loadTables();
         loadEmployees();
+        loadOrders();
         
         //TESTING CODE - print out hashmaps
         
@@ -44,14 +51,14 @@ public class RestaurantModel {
             System.out.println(entry.getValue().toString());
             
         }
+
+        ordersMap.put(1, new Order(1, "burger and fries", "finished"));
         
-        Table tableone = tablesMap.get(1);
-        
-        tableone.setCurrentCapacity(0);
+        updateOrders();
         
         updateTables();
         
-        for(Entry<Integer, Table> entry : tablesMap.entrySet()) {
+        for(Entry<Integer, Order> entry : ordersMap.entrySet()) {
 
             System.out.println(entry.getValue().toString());
             
@@ -95,7 +102,7 @@ public class RestaurantModel {
                 
                 Table table = new Table(tableNumber, maximumCapacity, currentCapacity, isClean);
                 
-                //Add the object to Tables
+                //Add the object to the hashmap
                 
                 tablesMap.put(tableNumber, table);
                 
@@ -136,7 +143,7 @@ public class RestaurantModel {
                 
                 String[] data = row.split(splitBy);
                 
-                //Parse the data into a Table object
+                //Parse the data into an Employee object
                 
                 int employeeId = Integer.parseInt(data[0]);
                 String employeeFirstname = data[1];
@@ -145,7 +152,7 @@ public class RestaurantModel {
                 
                 Employee employee = new Employee(employeeId, employeeFirstname, employeeLastname, employeePosition);
                 
-                //Add the object to Tables
+                //Add the object to the hashmap
                 
                 employeesMap.put(employeeId, employee);
                 
@@ -154,6 +161,55 @@ public class RestaurantModel {
             reader.close();
             
         } catch (Exception e) {  
+            
+            e.printStackTrace();  
+            
+        }  
+        
+    }
+    
+    private void loadOrders() {
+    	
+    	//Initialize variables
+    	
+    	String row = "";  
+        String splitBy = ",";  
+        
+        //Clear hashmap
+        
+        employeesMap.clear();
+        
+        //Extract data from the CSV file
+        
+        try {
+            
+            BufferedReader reader = new BufferedReader(new FileReader(ORDERS_FILENAME)); 
+            
+            reader.readLine();
+            
+            while ((row = reader.readLine()) != null) {
+                
+                //Get the data from the current line
+                
+                String[] data = row.split(splitBy);
+                
+                //Parse the data into an Order object
+                
+                int orderNumber = Integer.parseInt(data[0]);
+                String orderDescription = data[1];
+                String orderStatus = data[2];
+                
+                Order order = new Order(orderNumber, orderDescription, orderStatus);
+                
+                //Add the object to the hashmap
+                
+                ordersMap.put(orderNumber, order);
+                
+            }
+            
+            reader.close();
+            
+        } catch (Exception e) {
             
             e.printStackTrace();  
             
@@ -178,6 +234,16 @@ public class RestaurantModel {
     /* MUTATORS */
     
     public void updateTables() {
+    	
+    	//Check to make sure the hashmap isn't empty
+    	
+    	if (tablesMap.isEmpty()) {
+    		
+    		System.out.println("Error: There are no tables to update!");
+    		
+    		return;
+    		
+    	}
     	
     	//Initialize variables
 
@@ -211,6 +277,16 @@ public class RestaurantModel {
     
     public void updateEmployees() {
     	
+    	//Check to make sure the hashmap isn't empty
+    	
+    	if (employeesMap.isEmpty()) {
+    		
+    		System.out.println("Error: There are no tables to update!");
+    		
+    		return;
+    		
+    	}
+    	
     	//Initialize variables
 
         StringBuilder newData = new StringBuilder();
@@ -219,7 +295,7 @@ public class RestaurantModel {
         
         newData.append("id,firstname,lastname,position\n");
         
-        //Add each Table's data to the new data
+        //Add each Employee's data to the new data
         
         for(Entry<Integer, Employee> entry : employeesMap.entrySet()) {
         	
@@ -230,6 +306,48 @@ public class RestaurantModel {
         }
         
         try (PrintWriter writer = new PrintWriter(EMPLOYEES_FILENAME)) {
+        	
+        	writer.write(newData.toString());
+        	
+        } catch (Exception e) {  
+            
+            e.printStackTrace();  
+            
+        }  
+
+    }
+    
+    public void updateOrders() {
+    	
+    	//Check to make sure the hashmap isn't empty
+    	
+    	if (ordersMap.isEmpty()) {
+    		
+    		System.out.println("Error: There are no orders to update!");
+    		
+    		return;
+    		
+    	}
+    	
+    	//Initialize variables
+
+        StringBuilder newData = new StringBuilder();
+        
+        //Add header row to new data
+        
+        newData.append("number,description,status\n");
+        
+        //Add each Table's data to the new data
+        
+        for(Entry<Integer, Order> entry : ordersMap.entrySet()) {
+        	
+        	Order o = entry.getValue();
+        	
+        	newData.append(o.getNumber() + "," + o.getDescription() + "," + o.getStatus() + "\n");
+        	
+        }
+        
+        try (PrintWriter writer = new PrintWriter(ORDERS_FILENAME)) {
         	
         	writer.write(newData.toString());
         	
