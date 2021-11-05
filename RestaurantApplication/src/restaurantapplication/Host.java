@@ -9,5 +9,7 @@ public class Host extends Employee {
 		super(employeeId, employeeFirstname, employeeLastname, employeePosition);
 
 	}
+	
+	/* CLASS METHODS */
 
 }

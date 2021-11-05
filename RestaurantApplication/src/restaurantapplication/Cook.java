@@ -9,5 +9,7 @@ public class Cook extends Employee {
 		super(employeeId, employeeFirstname, employeeLastname, employeePosition);
 
 	}
+	
+	/* CLASS METHODS */
 
 }

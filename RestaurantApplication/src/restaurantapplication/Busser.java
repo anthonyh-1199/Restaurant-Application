@@ -9,5 +9,23 @@ public class Busser extends Employee {
 		super(employeeId, employeeFirstname, employeeLastname, employeePosition);
 
 	}
+	
+	/* CLASS METHODS */
+	
+	//Sets the status of a Table as being clean or dirty
+	
+	public void setTableStatus(Table table, boolean status) {
+		
+		if (status) {
+			
+			table.setClean();
+			
+		} else {
+			
+			table.setDirty();
+			
+		}
+		
+	}
 
 }
