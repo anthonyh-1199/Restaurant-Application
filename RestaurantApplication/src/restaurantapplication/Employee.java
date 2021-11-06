@@ -8,15 +8,17 @@ public class Employee {
     private String employeeFirstname;
     private String employeeLastname;
     private String employeePosition;
+    private String employeePassword;
     
     /* CONSTRUCTORS */
     
-    public Employee(int employeeId, String employeeFirstname, String employeeLastname, String employeePosition) {
+    public Employee(int employeeId, String employeeFirstname, String employeeLastname, String employeePosition, String employeePassword) {
     	
     	this.employeeId = employeeId;
     	this.employeeFirstname = employeeFirstname;
     	this.employeeLastname = employeeLastname;
     	this.employeePosition = employeePosition;
+    	this.employeePassword = employeePassword;
     	
     }
     
@@ -48,6 +50,12 @@ public class Employee {
     	
     }
     
+    public String getPassword() {
+    	
+    	return employeePassword;
+    	
+    }
+    
     /* MUTATORS */
     
     public void setId(int employeeId) {
@@ -71,6 +79,12 @@ public class Employee {
     public void setPosition(String employeePosition) {
     	
     	this.employeePosition = employeePosition;
+    	
+    }
+    
+    public void setPassword(String employeePassword) {
+    	
+    	this.employeePassword = employeePassword;
     	
     }
     

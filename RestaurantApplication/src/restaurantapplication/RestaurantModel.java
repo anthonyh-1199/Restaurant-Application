@@ -149,8 +149,9 @@ public class RestaurantModel {
                 String employeeFirstname = data[1];
                 String employeeLastname = data[2];
                 String employeePosition = data[3];
+                String employeePassword = data[4];
                 
-                Employee employee = new Employee(employeeId, employeeFirstname, employeeLastname, employeePosition);
+                Employee employee = new Employee(employeeId, employeeFirstname, employeeLastname, employeePosition, employeePassword);
                 
                 //Add the object to the hashmap
                 
@@ -301,7 +302,7 @@ public class RestaurantModel {
         	
         	Employee e = entry.getValue();
         	
-        	newData.append(e.getId() + "," + e.getFirstname() + "," + e.getLastname() + "," + e.getPosition() + "\n");
+        	newData.append(e.getId() + "," + e.getFirstname() + "," + e.getLastname() + "," + e.getPosition() + "," + e.getPassword() + "\n");
         	
         }
         
