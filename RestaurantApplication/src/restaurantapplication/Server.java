@@ -14,7 +14,7 @@ public class Server extends Employee {
 
 	//Adds an order record to the Orders CSV file
 	
-	public void addEmployee(Order order, String ordersFilename) {
+	public void addOrder(Order order, String ordersFilename) {
 
 		
 		
@@ -22,7 +22,7 @@ public class Server extends Employee {
 	
 	//Removes an order record from the Orders CSV file
 	
-	public void removeEmployee(Order order, String ordersFilename) {
+	public void removeOrder(Order order, String ordersFilename) {
 		
 		
 		
