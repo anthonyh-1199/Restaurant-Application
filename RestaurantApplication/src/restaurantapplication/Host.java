@@ -11,5 +11,25 @@ public class Host extends Employee {
 	}
 	
 	/* CLASS METHODS */
+	
+	//Changes the current capacity of a Table object
+	
+	public void setTableCapacity(Table table, int currentCapacity) {
+		
+		table.setCurrentCapacity(currentCapacity);
+		
+		table.setDirty();
+		
+	}
+	
+	//Sets the variables of a Table to their defaults
+	
+	public void resetTable(Table table) {
+		
+		table.setCurrentCapacity(0);
+		
+		table.setClean();
+		
+	}
 
 }
