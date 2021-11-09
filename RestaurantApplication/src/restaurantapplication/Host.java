@@ -4,9 +4,9 @@ public class Host extends Employee {
 	
     /* CONSTRUCTORS */
 
-	public Host(int employeeId, String employeeFirstname, String employeeLastname, String employeePosition) {
+	public Host(int employeeId, String employeeFirstname, String employeeLastname, String employeePosition, String employeePassword) {
 		
-		super(employeeId, employeeFirstname, employeeLastname, employeePosition);
+		super(employeeId, employeeFirstname, employeeLastname, employeePosition, employeePassword);
 
 	}
 	

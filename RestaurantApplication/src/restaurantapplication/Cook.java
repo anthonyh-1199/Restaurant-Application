@@ -4,9 +4,9 @@ public class Cook extends Employee {
 	
     /* CONSTRUCTORS */
 
-	public Cook(int employeeId, String employeeFirstname, String employeeLastname, String employeePosition) {
+	public Cook(int employeeId, String employeeFirstname, String employeeLastname, String employeePosition, String employeePassword) {
 		
-		super(employeeId, employeeFirstname, employeeLastname, employeePosition);
+		super(employeeId, employeeFirstname, employeeLastname, employeePosition, employeePassword);
 
 	}
 	

@@ -4,9 +4,9 @@ public class Server extends Employee {
 	
     /* CONSTRUCTORS */
 
-	public Server(int employeeId, String employeeFirstname, String employeeLastname, String employeePosition) {
+	public Server(int employeeId, String employeeFirstname, String employeeLastname, String employeePosition, String employeePassword) {
 		
-		super(employeeId, employeeFirstname, employeeLastname, employeePosition);
+		super(employeeId, employeeFirstname, employeeLastname, employeePosition, employeePassword);
 
 	}
 	
