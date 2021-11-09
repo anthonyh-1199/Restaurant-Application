@@ -20,50 +20,28 @@ public class RestaurantModel {
 	
 	private final String TABLES_FILENAME;
 	private final String EMPLOYEES_FILENAME;
+	private final String MENU_FILENAME;
 	private final String ORDERS_FILENAME;
 	
 	private HashMap<Integer, Table> tablesMap = new HashMap<Integer, Table>();
 	private HashMap<Integer, Employee> employeesMap = new HashMap<Integer, Employee>();
+	private HashMap<Integer, MenuItem> menuMap = new HashMap<Integer, MenuItem>();
 	private HashMap<Integer, Order> ordersMap = new HashMap<Integer, Order>();
 	
     /* CONSTRUCTORS */
 	
-    public RestaurantModel(String tablesFilename, String employeesFilename, String ordersFilename) {
+    public RestaurantModel(String tablesFilename, String employeesFilename, String menuFilename, String ordersFilename) {
     	
     	TABLES_FILENAME = tablesFilename;
     	EMPLOYEES_FILENAME = employeesFilename;
+    	MENU_FILENAME = menuFilename;
     	ORDERS_FILENAME = ordersFilename;
         
         loadTables();
         loadEmployees();
+        loadMenu();
         loadOrders();
-        
-        //TESTING CODE - print out hashmaps
-        
-        for(Entry<Integer, Table> entry : tablesMap.entrySet()) {
 
-            System.out.println(entry.getValue().toString());
-            
-        }
-        
-        for(Entry<Integer, Employee> entry : employeesMap.entrySet()) {
-
-            System.out.println(entry.getValue().toString());
-            
-        }
-
-        ordersMap.put(1, new Order(1, "burger and fries", "finished"));
-        
-        updateOrders();
-        
-        updateTables();
-        
-        for(Entry<Integer, Order> entry : ordersMap.entrySet()) {
-
-            System.out.println(entry.getValue().toString());
-            
-        }
-        
     }
     
     /* CLASS METHODS */
@@ -169,6 +147,68 @@ public class RestaurantModel {
         
     }
     
+    private void loadMenu() {
+    	
+    	//Initialize variables
+    	
+    	String row = "";  
+        String splitBy = ",";  
+        
+        //Clear hashmap
+        
+        menuMap.clear();
+
+        try {
+        	
+        	//Check if file exists
+        	
+            File menuFile = new File(MENU_FILENAME);
+            
+            if (!menuFile.exists()) {
+            	
+            	//If the file does not exist, create it
+
+            	menuFile.createNewFile();
+
+            }
+            
+        	//Extract data from the CSV file
+            
+            BufferedReader reader = new BufferedReader(new FileReader(MENU_FILENAME)); 
+            
+            reader.readLine();
+            
+            while ((row = reader.readLine()) != null) {
+                
+                //Get the data from the current line
+                
+                String[] data = row.split(splitBy);
+                
+                //Parse the data into a MenuItem object
+
+                int itemNumber = Integer.parseInt(data[0]);
+                String itemName = data[1];
+                String itemDescription = data[2];
+                float itemCost = Float.parseFloat(data[0]);
+                
+                MenuItem item = new MenuItem(itemNumber, itemName, itemDescription, itemCost);
+                
+                //Add the object to the hashmap
+                
+                menuMap.put(itemNumber, item);
+                
+            }  
+            
+            reader.close();
+            
+        } catch (Exception e) {  
+            
+            e.printStackTrace();  
+            
+        }  
+    	
+    }
+    
     private void loadOrders() {
     	
     	//Initialize variables
@@ -229,6 +269,18 @@ public class RestaurantModel {
     public HashMap<Integer, Employee> getEmployeesMap() {
     	
     	return employeesMap;
+    	
+    }
+    
+    public HashMap<Integer, MenuItem> getMenu() {
+    	
+    	return menuMap;
+    	
+    }
+    
+    public HashMap<Integer, Order> getOrdersMap() {
+    	
+    	return ordersMap;
     	
     }
     
@@ -318,6 +370,48 @@ public class RestaurantModel {
 
     }
     
+    public void updateMenu() {
+    	
+    	//Check to make sure the hashmap isn't empty
+    	
+    	if (menuMap.isEmpty()) {
+    		
+    		System.out.println("Error: There are no menu items to update!");
+    		
+    		return;
+    		
+    	}
+    	
+    	//Initialize variables
+
+        StringBuilder newData = new StringBuilder();
+        
+        //Add header row to new data
+        
+        newData.append("item number,item name,item description,item cost\n");
+        
+        //Add each MenuItem's data to the new data
+        
+        for(Entry<Integer, MenuItem> entry : menuMap.entrySet()) {
+        	
+        	MenuItem i = entry.getValue();
+        	
+        	newData.append(i.getNumber() + "," + i.getName() + "," + i.getDescription() + "," + i.getCost() + "\n");
+        	
+        }
+        
+        try (PrintWriter writer = new PrintWriter(MENU_FILENAME)) {
+        	
+        	writer.write(newData.toString());
+        	
+        } catch (Exception e) {  
+            
+            e.printStackTrace();  
+            
+        }  
+    	
+    }
+    
     public void updateOrders() {
     	
     	//Check to make sure the hashmap isn't empty
@@ -338,7 +432,7 @@ public class RestaurantModel {
         
         newData.append("number,description,status\n");
         
-        //Add each Table's data to the new data
+        //Add each Order's data to the new data
         
         for(Entry<Integer, Order> entry : ordersMap.entrySet()) {
         	
