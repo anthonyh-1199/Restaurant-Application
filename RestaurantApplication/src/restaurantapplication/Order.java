@@ -1,19 +1,21 @@
 package restaurantapplication;
 
+import java.util.ArrayList;
+
 public class Order {
 
     /* INITIALIZE VARIABLES */
     
     private int orderNumber;
-    private String orderDescription;
+    private ArrayList<MenuItem> orderItems;
     private String orderStatus;
     
     /* CONSTRUCTORS */
     
-    public Order(int orderNumber, String orderDescription, String orderStatus) {
+    public Order(int orderNumber, ArrayList<MenuItem> orderItems, String orderStatus) {
     	
     	this.orderNumber = orderNumber;
-    	this.orderDescription = orderDescription;
+    	this.orderItems = orderItems;
     	this.orderStatus = orderStatus;
     	
     }
@@ -28,9 +30,9 @@ public class Order {
     	
     }
     
-    public String getDescription() {
+    public ArrayList<MenuItem> getItems() {
     	
-    	return orderDescription;
+    	return orderItems;
     	
     }
     
@@ -48,9 +50,9 @@ public class Order {
     	
     }
     
-    public void setDescription(String orderDescription) {
+    public void setItems(ArrayList<MenuItem> orderItems) {
     	
-    	this.orderDescription = orderDescription;
+    	this.orderItems = orderItems;
     	
     }
     
@@ -65,7 +67,15 @@ public class Order {
     @Override
     public String toString() {
     	
-    	String s = "Order #" + orderNumber + " : " + orderDescription + " - " + orderStatus;
+    	String items = "";
+    	
+    	for (MenuItem i : orderItems) {
+    		
+    		items += i.getName() + ", ";
+    		
+    	}
+    	
+    	String s = "Order #" + orderNumber + " : " + items + "- " + orderStatus;
     	
     	return s;
     	

@@ -1,5 +1,6 @@
 package restaurantapplication;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.io.*;
@@ -23,10 +24,10 @@ public class RestaurantModel {
 	private final String MENU_FILENAME;
 	private final String ORDERS_FILENAME;
 	
-	private HashMap<Integer, Table> tablesMap = new HashMap<Integer, Table>();
-	private HashMap<Integer, Employee> employeesMap = new HashMap<Integer, Employee>();
-	private HashMap<Integer, MenuItem> menuMap = new HashMap<Integer, MenuItem>();
-	private HashMap<Integer, Order> ordersMap = new HashMap<Integer, Order>();
+	private HashMap<Integer, Table> tablesMap = new HashMap<>();
+	private HashMap<Integer, Employee> employeesMap = new HashMap<>();
+	private HashMap<Integer, MenuItem> menuMap = new HashMap<>();
+	private HashMap<Integer, Order> ordersMap = new HashMap<>();
 	
     /* CONSTRUCTORS */
 	
@@ -237,10 +238,18 @@ public class RestaurantModel {
                 //Parse the data into an Order object
                 
                 int orderNumber = Integer.parseInt(data[0]);
-                String orderDescription = data[1];
+                
+                ArrayList<MenuItem> orderItems = new ArrayList<>();
+                
+                for (String s : data[1].split("-")) {
+                	
+                	orderItems.add(menuMap.get(Integer.parseInt(s)));
+                	
+                }
+
                 String orderStatus = data[2];
                 
-                Order order = new Order(orderNumber, orderDescription, orderStatus);
+                Order order = new Order(orderNumber, orderItems, orderStatus);
                 
                 //Add the object to the hashmap
                 
@@ -438,7 +447,15 @@ public class RestaurantModel {
         	
         	Order o = entry.getValue();
         	
-        	newData.append(o.getNumber() + "," + o.getDescription() + "," + o.getStatus() + "\n");
+        	String s = "";
+        	
+        	for (MenuItem i : o.getItems()) {
+        		
+        		s += i.getNumber() + "-";
+        		
+        	}
+        	
+        	newData.append(o.getNumber() + "," + s + "," + o.getStatus() + "\n");
         	
         }
         
