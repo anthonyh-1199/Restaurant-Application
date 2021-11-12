@@ -12,25 +12,25 @@ public class Manager extends Employee {
 	
 	/* CLASS METHODS */
 	
-	//Adds an employee record to the Employees CSV file
+	//Adds an employee record to the RestaurantModel's employeesMap
 	
-	public void addEmployee(Employee employee, String employeesFilename) {
+	public void addEmployee(Employee employee, RestaurantModel model) {
 
 		
 		
 	}
 	
-	//Removes an employee record from the Employees CSV file
+	//Removes an employee record from the RestaurantModel's employeesMap
 	
-	public void removeEmployee(Employee employee, String employeesFilename) {
+	public void removeEmployee(Employee employee, RestaurantModel model) {
 		
 		
 		
 	}
 	
-	//Adds a table record to the Tables CSV file
+	//Adds a table record to the RestaurantModel's tablesMap
 	
-	public void addTable(Table table, String tablesFilename) {
+	public void addTable(Table table, RestaurantModel model) {
 
 		
 		
