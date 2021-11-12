@@ -16,7 +16,9 @@ public class Manager extends Employee {
 	
 	public void addEmployee(Employee employee, RestaurantModel model) {
 
+		model.getEmployeesMap().put(employee.getId(), employee);
 		
+		model.updateEmployees();
 		
 	}
 	
@@ -24,7 +26,9 @@ public class Manager extends Employee {
 	
 	public void removeEmployee(Employee employee, RestaurantModel model) {
 		
+		model.getEmployeesMap().remove(employee.getId());
 		
+		model.updateEmployees();
 		
 	}
 	
@@ -32,15 +36,19 @@ public class Manager extends Employee {
 	
 	public void addTable(Table table, RestaurantModel model) {
 
+		model.getTablesMap().put(table.getNumber(), table);
 		
+		model.updateTables();
 		
 	}
 	
-	//Removes a table record from the Tables CSV file
+	//Removes a table record from the RestaurantModel's tablesMap
 	
-	public void removeTable(Table table, String tablesFilename) {
+	public void removeTable(Table table, RestaurantModel model) {
 		
+		model.getEmployeesMap().remove(table.getNumber());
 		
+		model.updateTables();
 		
 	}
 
