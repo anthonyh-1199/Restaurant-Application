@@ -12,17 +12,17 @@ public class Server extends Employee {
 	
 	/* CLASS METHODS */
 
-	//Adds an order record to the Orders CSV file
+	//Adds an order entry to the RestaurantModel's ordersMap
 	
-	public void addOrder(Order order, String ordersFilename) {
+	public void addOrder(Order order, RestaurantModel model) {
 
 		
 		
 	}
 	
-	//Removes an order record from the Orders CSV file
+	//Removes an order entry from the RestaurantModel's ordersMap
 	
-	public void removeOrder(Order order, String ordersFilename) {
+	public void removeOrder(Order order, RestaurantModel model) {
 		
 		
 		
