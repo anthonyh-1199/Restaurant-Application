@@ -16,7 +16,9 @@ public class Cook extends Employee {
 	
 	public void addOrder(Order order, RestaurantModel model) {
 
+		model.getOrdersMap().put(order.getNumber(), order);
 		
+		model.updateOrders();
 		
 	}
 	
@@ -24,7 +26,9 @@ public class Cook extends Employee {
 	
 	public void removeOrder(Order order, RestaurantModel model) {
 		
-		
+		model.getOrdersMap().remove(order.getNumber());
+
+		model.updateOrders();
 		
 	}
 	
