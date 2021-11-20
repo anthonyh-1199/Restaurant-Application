@@ -117,7 +117,7 @@ public class RestaurantModel {
             reader.readLine();
             
             while ((row = reader.readLine()) != null) {
-                
+
                 //Get the data from the current line
                 
                 String[] data = row.split(splitBy);
@@ -219,7 +219,7 @@ public class RestaurantModel {
         
         //Clear hashmap
         
-        employeesMap.clear();
+        ordersMap.clear();
         
         //Extract data from the CSV file
         
@@ -439,7 +439,7 @@ public class RestaurantModel {
         
         //Add header row to new data
         
-        newData.append("number,description,status\n");
+        newData.append("number,items,status\n");
         
         //Add each Order's data to the new data
         
