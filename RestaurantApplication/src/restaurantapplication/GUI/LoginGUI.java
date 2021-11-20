@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import restaurantapplication.Employee;
+import restaurantapplication.RestaurantApplication;
 import restaurantapplication.RestaurantModel;
 
 public class LoginGUI extends JPanel implements ActionListener {
@@ -18,15 +19,15 @@ public class LoginGUI extends JPanel implements ActionListener {
 	private JLabel passwordLabel;
 	private JPasswordField passwordField;
 	private JTextField idField;
-	private RestaurantModel restaurantModel;
+	private ApplicationFrame appFrame;
 	
 	/* CONSTRUCTOR */
 
-	public LoginGUI(RestaurantModel restaurantModel) {
+	public LoginGUI(ApplicationFrame appFrame) {
 		
 		//Assign parameters
 		
-		this.restaurantModel = restaurantModel;
+		this.appFrame = appFrame;
 		
 		//Format layout
 		
@@ -98,7 +99,7 @@ public class LoginGUI extends JPanel implements ActionListener {
 			
 			idInput = Integer.parseInt(idField.getText());
 
-			if (!(restaurantModel.getEmployeesMap()).containsKey(idInput)) {
+			if (!(appFrame.getModel().getEmployeesMap()).containsKey(idInput)) {
 
 				errorLabel.setText("Error: User not found");
 
@@ -116,11 +117,11 @@ public class LoginGUI extends JPanel implements ActionListener {
 		
 		/* VALIDATE USER PASSWORD */
 		
-		Employee employee = (restaurantModel.getEmployeesMap()).get(idInput);
+		Employee employee = (appFrame.getModel().getEmployeesMap()).get(idInput);
 		
 		if (passwordInput.equals(employee.getPassword())) {
-			
-			//TO-DO : add logic for changing to next panel
+
+			appFrame.changePanel(employee.getPosition());
 			
 		} else {
 			
