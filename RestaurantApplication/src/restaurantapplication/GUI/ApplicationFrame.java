@@ -1,15 +1,15 @@
 package restaurantapplication.GUI;
 
 import java.awt.Container;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import restaurantapplication.RestaurantModel;
+import javax.swing.*;
+import restaurantapplication.*;
 
 public class ApplicationFrame extends JFrame {
 	
 	/* INITIALIZE VARIABLES */
 	
 	RestaurantModel model;
+	Employee currentUser;
 	
 	/* CONSTRUCTOR */
 
