@@ -9,6 +9,12 @@ public class Server extends Employee {
 		super(employeeId, employeeFirstname, employeeLastname, employeePosition, employeePassword);
 
 	}
+	
+	public Server(Employee e) {
+		
+		super(e.getId(), e.getFirstname(), e.getLastname(), e.getPosition(), e.getPassword());
+		
+	}
 
 	/* CLASS METHODS */
 

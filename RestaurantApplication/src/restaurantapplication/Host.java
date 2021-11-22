@@ -10,6 +10,12 @@ public class Host extends Employee {
 
 	}
 	
+	public Host(Employee e) {
+		
+		super(e.getId(), e.getFirstname(), e.getLastname(), e.getPosition(), e.getPassword());
+		
+	}
+	
 	/* CLASS METHODS */
 	
 	//Changes the current capacity of a Table object

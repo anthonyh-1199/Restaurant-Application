@@ -10,6 +10,12 @@ public class Manager extends Employee {
 
 	}
 	
+	public Manager(Employee e) {
+		
+		super(e.getId(), e.getFirstname(), e.getLastname(), e.getPosition(), e.getPassword());
+		
+	}
+	
 	/* CLASS METHODS */
 	
 	//Adds an employee record to the RestaurantModel's employeesMap

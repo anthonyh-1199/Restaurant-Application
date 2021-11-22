@@ -15,8 +15,8 @@ public class Employee {
     public Employee(int employeeId, String employeeFirstname, String employeeLastname, String employeePosition, String employeePassword) {
     	
     	this.employeeId = employeeId;
-    	this.employeeFirstname = employeeFirstname;
-    	this.employeeLastname = employeeLastname;
+    	this.employeeFirstname = employeeFirstname.substring(0, 1).toUpperCase() + employeeFirstname.substring(1);
+    	this.employeeLastname = employeeLastname.substring(0, 1).toUpperCase() + employeeLastname.substring(1);
     	this.employeePosition = employeePosition;
     	this.employeePassword = employeePassword;
     	

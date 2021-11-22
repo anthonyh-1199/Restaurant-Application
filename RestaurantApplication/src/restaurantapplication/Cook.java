@@ -10,6 +10,12 @@ public class Cook extends Employee {
 
 	}
 	
+	public Cook(Employee e) {
+		
+		super(e.getId(), e.getFirstname(), e.getLastname(), e.getPosition(), e.getPassword());
+		
+	}
+	
 	/* CLASS METHODS */
 	
 	//Adds an order record to the RestaurantModel's ordersMap

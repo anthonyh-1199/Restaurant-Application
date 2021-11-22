@@ -10,6 +10,12 @@ public class Busser extends Employee {
 
 	}
 	
+	public Busser(Employee e) {
+		
+		super(e.getId(), e.getFirstname(), e.getLastname(), e.getPosition(), e.getPassword());
+		
+	}
+	
 	/* CLASS METHODS */
 	
 	//Sets the status of a Table as being clean or dirty
