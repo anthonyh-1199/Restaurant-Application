@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
 import restaurantapplication.Employee;
 import restaurantapplication.RestaurantApplication;
@@ -13,13 +15,13 @@ public class LoginGUI extends JPanel implements ActionListener {
 	
 	/* INITIALIZE VARIABLES */
 	
+	private ApplicationFrame appFrame;
 	private JButton loginButton;
 	private JLabel errorLabel;
 	private JLabel idLabel;
 	private JLabel passwordLabel;
 	private JPasswordField passwordField;
 	private JTextField idField;
-	private ApplicationFrame appFrame;
 	
 	/* CONSTRUCTOR */
 
@@ -28,10 +30,14 @@ public class LoginGUI extends JPanel implements ActionListener {
 		//Assign parameters
 		
 		this.appFrame = appFrame;
-		
+
 		//Format layout
 		
 		this.setLayout(null);
+		
+		//Format panel border
+		
+		this.setBorder (new TitledBorder (new EtchedBorder(), ("User Login")));
 		
 		//Format idLabel
 		
@@ -120,6 +126,8 @@ public class LoginGUI extends JPanel implements ActionListener {
 		Employee employee = (appFrame.getModel().getEmployeesMap()).get(idInput);
 		
 		if (passwordInput.equals(employee.getPassword())) {
+			
+			appFrame.currentUser = employee;
 
 			appFrame.changePanel(employee.getPosition());
 			
