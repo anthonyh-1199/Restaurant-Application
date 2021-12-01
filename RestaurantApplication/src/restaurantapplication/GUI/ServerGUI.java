@@ -1,17 +1,12 @@
 package restaurantapplication.GUI;
 
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
 
-import restaurantapplication.MenuItem;
 import restaurantapplication.Order;
-import restaurantapplication.RestaurantModel;
 import restaurantapplication.Server;
 
 public class ServerGUI extends JPanel {
@@ -19,15 +14,18 @@ public class ServerGUI extends JPanel {
 	/* INITIALIZE VARIABLES */
 
 	private ApplicationFrame appFrame;
-	private JButton logoutButton;
 	private JButton addOrderButton;
-	private JComboBox changeOrderCombo;
-	private JLabel changeOrderLabel;
+	private JButton updateOrderButton;
+	private JButton logoutButton;
+	private JComboBox updateOrderCombo;
 	private JLabel addOrderLabel;
+	private JLabel addTableLable;
+	private JLabel updateOrderLabel;
 	private JTextArea addOrderText;
-	private JTextArea changeOrderDescriptions;
+	private JTextArea addTableText;
+	private JTextArea updateOrderText;
 	private JTextArea currentOrdersText;
-	private JScrollPane changeOrderScroll;
+	private JScrollPane updateOrderScroll;
 	private JScrollPane addOrderScroll;
 	private Server currentUser;
 
@@ -76,17 +74,38 @@ public class ServerGUI extends JPanel {
 		
 		this.add(addOrderScroll);
 		
+		//Format addTableLable
+		
+		addTableLable = new JLabel("Table #");
+		
+		addTableLable.setBounds(50, 110, 70, 25);
+		
+		this.add(addTableLable);
+		
+		//Format addTableText
+		
+		addTableText = new JTextArea("");
+		
+		addTableText.setBounds(100, 113, 30, 20);
+
+		this.add(addTableText);
+		
 		//Format addOrderButton
 
 		addOrderButton = new JButton("Add order");
 
-		addOrderButton.setBounds(50, 110, 90, 25);
+		addOrderButton.setBounds(50, 140, 90, 25);
 		
 		addOrderButton.addActionListener(
 				
 			new ActionListener() {
 				
 				public void actionPerformed(ActionEvent e) {
+					
+					//Initialize variables
+					
+					int orderId, tableId;
+					String orderDescription, orderStatus;
 					
 					//Check that the description of the new Order object isn't blank
 					
@@ -101,10 +120,36 @@ public class ServerGUI extends JPanel {
 						
 					}
 					
+					//Check that the table ID in addTableText is valid
+
+					try {
+						
+						tableId = Integer.parseInt(addTableText.getText());
+
+						if (!(appFrame.getModel().getEmployeesMap()).containsKey(tableId)) {
+							
+							JOptionPane.showMessageDialog(ServerGUI.this,
+									"Error: Table ID not found.",
+								    "Error",
+								    JOptionPane.ERROR_MESSAGE);
+
+							return;
+							
+						}
+						
+					} catch(Exception x) {
+						
+						JOptionPane.showMessageDialog(ServerGUI.this,
+								"Error: Invalid table ID.",
+							    "Error",
+							    JOptionPane.ERROR_MESSAGE);
+
+						return;
+						
+					}
+					
 					//Initialize parameters for new Order object
-					
-					int orderId;
-					
+
 					try {
 					
 						orderId = Collections.max(appFrame.getModel().getOrdersMap().keySet()) + 1;
@@ -115,11 +160,9 @@ public class ServerGUI extends JPanel {
 						
 					}
 					
-					String orderDescription = addOrderText.getText().replace("\n", "\\n");
+					orderDescription = addOrderText.getText().replace("\n", "\\n");
 
-					int tableId = 1;
-					
-					String orderStatus = "In the kitchen";
+					orderStatus = "In the kitchen";
 					
 					//Create new Order object and add it to the model
 
@@ -132,9 +175,14 @@ public class ServerGUI extends JPanel {
 						    "Success",
 						    JOptionPane.PLAIN_MESSAGE);
 					
-					//Clear addOrderText
+					//Clear JTextAreas
 					
 					addOrderText.setText("");
+					addTableText.setText("");
+
+					//Refresh updateOrderCombo
+					
+					refreshUpdateOrderCombo();
 
 				}
 				
@@ -146,36 +194,49 @@ public class ServerGUI extends JPanel {
 
 		//Format changeOrderLabel
 		
-		changeOrderLabel = new JLabel("Change order: ");
+		updateOrderLabel = new JLabel("Change order: ");
 		
-		changeOrderLabel.setBounds(50, 190, 180, 25);
+		updateOrderLabel.setBounds(50, 190, 180, 25);
 		
-		//this.add(changeOrderLabel);
+		this.add(updateOrderLabel);
 
 		//Format changeOrderCombo
 
-		changeOrderCombo = new JComboBox(GetUnfinishedOrderNumbers().toArray());
+		updateOrderCombo = new JComboBox();
+		
+		refreshUpdateOrderCombo();
 
-		changeOrderCombo.setBounds(70, 220, 45, 25);
+		updateOrderCombo.setBounds(70, 220, 45, 25);
 
-		changeOrderCombo.addActionListener(
+		updateOrderCombo.addActionListener(
 
 			new ActionListener() {
 
 				public void actionPerformed(ActionEvent e) {
 					
-					if (changeOrderCombo.getSelectedItem().toString().equals("")) {
-						
-						changeOrderDescriptions.setText("Order description");
+					//Set contents of changeOrderText to match the selected item
+					
+					if (updateOrderCombo.getSelectedItem() == null) {
 						
 						return;
 						
 					}
 					
-					
-					String orderDescription = appFrame.getModel().getOrdersMap().get((Integer.parseInt(changeOrderCombo.getSelectedItem().toString()))).getDescription().replace("\\n", "\n");
+					if (updateOrderCombo.getSelectedItem().toString().equals("")) {
+						
+						updateOrderText.setText("");
+						
+						return;
+						
+					}
 
-					changeOrderDescriptions.setText(orderDescription);
+					String orderDescription = appFrame.getModel().getOrdersMap().get((Integer.parseInt(updateOrderCombo.getSelectedItem().toString()))).getDescription().replace("\\n", "\n");
+
+					updateOrderText.setText(orderDescription);
+					
+					//Refresh updateOrderCombo
+					
+					refreshUpdateOrderCombo();
 
 				}
 
@@ -183,22 +244,80 @@ public class ServerGUI extends JPanel {
 
 		);
 
-		//this.add(changeOrderCombo);
+		this.add(updateOrderCombo);
 		
+		//Format changeOrderButton
 		
+		updateOrderButton = new JButton("Update");
+		
+		updateOrderButton.setBounds(55, 250, 75, 25);
+		
+		updateOrderButton.addActionListener(
+
+			new ActionListener() {
+				
+				public void actionPerformed(ActionEvent e) {
+					
+					//Check that the description of the new Order object isn't blank
+					
+					if (updateOrderText.getText().isBlank()) {
+						
+						JOptionPane.showMessageDialog(ServerGUI.this,
+								"Error: Blank order description.",
+							    "Error",
+							    JOptionPane.ERROR_MESSAGE);
+						
+						return;
+						
+					}
+					
+					//Get the current version of the Order object
+					
+					Order currentOrder = appFrame.getModel().getOrdersMap().get((Integer.parseInt(updateOrderCombo.getSelectedItem().toString())));
+					
+					//Update the description of the Order object
+					
+					currentOrder.setDescription(updateOrderText.getText().replace("\n", "\\n"));
+					
+					//Update the model
+					
+					appFrame.getModel().updateOrders();
+					
+					//Show successful dialog box
+					
+					JOptionPane.showMessageDialog(ServerGUI.this,
+							"Order successfully updated.",
+						    "Success",
+						    JOptionPane.PLAIN_MESSAGE);
+					
+					//Clear addOrderText
+					
+					updateOrderText.setText("");
+					
+					//Refresh updateOrderCombo
+					
+					refreshUpdateOrderCombo();
+
+				}
+				
+			}
+			
+		);
+	
+		this.add(updateOrderButton);
 		
 		
 		
 		
 		//Format changeOrderDescription
 
-		changeOrderDescriptions = new JTextArea("");
+		updateOrderText = new JTextArea("");
 
-		changeOrderScroll = new JScrollPane(changeOrderDescriptions);
+		updateOrderScroll = new JScrollPane(updateOrderText);
 
-		changeOrderScroll.setBounds(150, 192, 250, 100);
+		updateOrderScroll.setBounds(150, 192, 250, 100);
 		
-		//this.add(changeOrderScroll);
+		this.add(updateOrderScroll);
 		
 		
 		
@@ -232,7 +351,9 @@ public class ServerGUI extends JPanel {
 		
 	}
 
-	private List<String> GetUnfinishedOrderNumbers() {
+	private void refreshUpdateOrderCombo() {
+		
+		updateOrderCombo.removeAllItems();
 		
 		HashMap<Integer, Order> orders = (appFrame.getModel().getOrdersMap());
 		
@@ -247,13 +368,13 @@ public class ServerGUI extends JPanel {
 			if (!orders.get(key).getStatus().equals("Completed")) {
 				
 				list.add(key.toString());
-				
+
 			}
 			
 		}
 		
-		return list;
-		
+		updateOrderCombo.setModel(new DefaultComboBoxModel(list.toArray()));
+
 	}
 	
 }
