@@ -47,15 +47,6 @@ public class ServerGUI extends JPanel {
 		
 		this.setBorder (new TitledBorder(new EtchedBorder(), ("Server - " + currentUser.getFirstname() + " " + currentUser.getLastname() + " #" + currentUser.getId())));
 
-		//Format currentOrdersText
-
-		currentOrdersText = new JTextArea(16, 58);
-		currentOrdersText.setEditable(false); // set textArea non-editable
-	    JScrollPane scroll = new JScrollPane(currentOrdersText);
-	    scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
-	    this.add(scroll);
-
 		//Format addOrderLabel
 		
 		addOrderLabel = new JLabel("Add order: ");
@@ -271,6 +262,19 @@ public class ServerGUI extends JPanel {
 						
 					}
 					
+					//Check that the ID of the new Order isn't blank
+					
+					if (updateOrderCombo.getSelectedItem().toString().isBlank()) {
+						
+						JOptionPane.showMessageDialog(ServerGUI.this,
+								"Error: Invalid order ID.",
+							    "Error",
+							    JOptionPane.ERROR_MESSAGE);
+						
+						return;
+						
+					}
+					
 					//Get the current version of the Order object
 					
 					Order currentOrder = appFrame.getModel().getOrdersMap().get((Integer.parseInt(updateOrderCombo.getSelectedItem().toString())));
@@ -305,10 +309,7 @@ public class ServerGUI extends JPanel {
 		);
 	
 		this.add(updateOrderButton);
-		
-		
-		
-		
+
 		//Format changeOrderDescription
 
 		updateOrderText = new JTextArea("");
@@ -318,14 +319,6 @@ public class ServerGUI extends JPanel {
 		updateOrderScroll.setBounds(150, 192, 250, 100);
 		
 		this.add(updateOrderScroll);
-		
-		
-		
-		
-		
-		
-		
-		
 
 		//Format logoutButton
 
