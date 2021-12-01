@@ -21,10 +21,26 @@ public class Host extends Employee {
 	//Changes the current capacity of a Table object
 	
 	public void setTableCapacity(Table table, int currentCapacity) {
-		
+
 		table.setCurrentCapacity(currentCapacity);
-		
+
 		table.setDirty();
+
+	}
+	
+	//Changes the current status of a Table object
+	
+	public void setTableStatus(Table table, boolean status) {
+		
+		if (status) {
+			
+			table.setClean();
+			
+		} else {
+			
+			table.setDirty();
+			
+		}
 		
 	}
 	
