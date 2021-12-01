@@ -17,7 +17,6 @@ public class LoginGUI extends JPanel implements ActionListener {
 	
 	private ApplicationFrame appFrame;
 	private JButton loginButton;
-	private JLabel errorLabel;
 	private JLabel idLabel;
 	private JLabel passwordLabel;
 	private JPasswordField passwordField;
@@ -80,15 +79,7 @@ public class LoginGUI extends JPanel implements ActionListener {
 		loginButton.addActionListener(this);
 		
 		this.add(loginButton);
-		
-		//Format errorLabel
-		
-		errorLabel = new JLabel("", SwingConstants.CENTER);
 
-		errorLabel.setBounds(50, 150, 250, 25);	
-
-		this.add(errorLabel);
-		
 	}
 
 	@Override
@@ -106,8 +97,11 @@ public class LoginGUI extends JPanel implements ActionListener {
 			idInput = Integer.parseInt(idField.getText());
 
 			if (!(appFrame.getModel().getEmployeesMap()).containsKey(idInput)) {
-
-				errorLabel.setText("Error: User not found");
+				
+				JOptionPane.showMessageDialog(this,
+						"Error: User not found.",
+					    "Login error",
+					    JOptionPane.ERROR_MESSAGE);
 
 				return;
 				
@@ -115,7 +109,10 @@ public class LoginGUI extends JPanel implements ActionListener {
 			
 		} catch(Exception x) {
 			
-			errorLabel.setText("Error: Invalid employee ID");
+			JOptionPane.showMessageDialog(this,
+					"Error: Invalid employee ID.",
+				    "Login error",
+				    JOptionPane.ERROR_MESSAGE);
 
 			return;
 			
@@ -133,8 +130,11 @@ public class LoginGUI extends JPanel implements ActionListener {
 			
 		} else {
 			
-			errorLabel.setText("Error: Incorrect password");
-			
+			JOptionPane.showMessageDialog(this,
+			    "Error: Incorrect password.",
+			    "Login error",
+			    JOptionPane.ERROR_MESSAGE);
+
 		}
 
 	}
