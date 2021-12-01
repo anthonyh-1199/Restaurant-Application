@@ -7,15 +7,17 @@ public class Order {
     /* INITIALIZE VARIABLES */
     
     private int orderNumber;
-    private ArrayList<MenuItem> orderItems;
+    private int tableId;
+    private String orderDescription;
     private String orderStatus;
     
     /* CONSTRUCTORS */
     
-    public Order(int orderNumber, ArrayList<MenuItem> orderItems, String orderStatus) {
+    public Order(int orderNumber, String orderDescription, int tableId, String orderStatus) {
     	
     	this.orderNumber = orderNumber;
-    	this.orderItems = orderItems;
+    	this.orderDescription = orderDescription;
+    	this.tableId = tableId;
     	this.orderStatus = orderStatus;
     	
     }
@@ -30,9 +32,15 @@ public class Order {
     	
     }
     
-    public ArrayList<MenuItem> getItems() {
+    public String getDescription() {
     	
-    	return orderItems;
+    	return orderDescription;
+    	
+    }
+    
+    public int getTableId() {
+    	
+    	return tableId;
     	
     }
     
@@ -50,9 +58,15 @@ public class Order {
     	
     }
     
-    public void setItems(ArrayList<MenuItem> orderItems) {
+    public void setDescription(String orderDescription) {
     	
-    	this.orderItems = orderItems;
+    	this.orderDescription = orderDescription;
+    	
+    }
+    
+    public void setTableId(int tableId) {
+    	
+    	this.tableId = tableId;
     	
     }
     
@@ -66,16 +80,8 @@ public class Order {
     
     @Override
     public String toString() {
-    	
-    	String items = "";
-    	
-    	for (MenuItem i : orderItems) {
-    		
-    		items += i.getName() + ", ";
-    		
-    	}
-    	
-    	String s = "Order #" + orderNumber + " : " + items + "- " + orderStatus;
+
+    	String s = "Order #" + orderNumber + " : " + orderDescription + " - " + "for table #" + tableId + " Status: " + orderStatus;
     	
     	return s;
     	

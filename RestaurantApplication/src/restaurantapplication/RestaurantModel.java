@@ -1,6 +1,5 @@
 package restaurantapplication;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.io.*;
@@ -239,17 +238,13 @@ public class RestaurantModel {
                 
                 int orderNumber = Integer.parseInt(data[0]);
                 
-                ArrayList<MenuItem> orderItems = new ArrayList<>();
+                String orderDescription = data[1];
                 
-                for (String s : data[1].split("-")) {
-                	
-                	orderItems.add(menuMap.get(Integer.parseInt(s)));
-                	
-                }
+                int tableId = Integer.parseInt(data[2]);
 
-                String orderStatus = data[2];
+                String orderStatus = data[3];
                 
-                Order order = new Order(orderNumber, orderItems, orderStatus);
+                Order order = new Order(orderNumber, orderDescription, tableId, orderStatus);
                 
                 //Add the object to the hashmap
                 
@@ -439,23 +434,15 @@ public class RestaurantModel {
         
         //Add header row to new data
         
-        newData.append("number,items,status\n");
+        newData.append("number,description,table,status\n");
         
         //Add each Order's data to the new data
         
         for(Entry<Integer, Order> entry : ordersMap.entrySet()) {
         	
         	Order o = entry.getValue();
-        	
-        	String s = "";
-        	
-        	for (MenuItem i : o.getItems()) {
-        		
-        		s += i.getNumber() + "-";
-        		
-        	}
-        	
-        	newData.append(o.getNumber() + "," + s + "," + o.getStatus() + "\n");
+
+        	newData.append(o.getNumber() + "," + o.getDescription() + "," + o.getTableId() + "," + o.getStatus() + "\n");
         	
         }
         
