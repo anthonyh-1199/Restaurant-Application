@@ -31,7 +31,7 @@ public class Table {
         this.tableNumber = tableNumber;
         this.maximumCapacity = maximumCapacity;
         this.currentCapacity = currentCapacity;
-        this.isClean = true;
+        this.isClean = isClean;
         
     }
     
