@@ -47,7 +47,7 @@ public class HostGUI extends JPanel {
 		
 		selectedTableLabel = new JLabel("<html>Selected table: &nbsp;&nbsp;&nbsp&nbsp#<html>");
 
-		selectedTableLabel.setBounds(50, 80, 180, 25);
+		selectedTableLabel.setBounds(135, 80, 180, 25);
 		
 		this.add(selectedTableLabel);
 
@@ -57,7 +57,7 @@ public class HostGUI extends JPanel {
 		
 		refreshSelectTableCombo();
 
-		selectTableCombo.setBounds(160, 80, 45, 25);
+		selectTableCombo.setBounds(245, 80, 45, 25);
 		
 		selectTableCombo.addActionListener(
 
@@ -101,7 +101,7 @@ public class HostGUI extends JPanel {
 		
 		selectedTableLabel = new JLabel("<html>Table capacity: <br/><br/>Table status: <html>");
 		
-		selectedTableLabel.setBounds(50, 97, 180, 86);
+		selectedTableLabel.setBounds(135, 97, 180, 86);
 		
 		this.add(selectedTableLabel);
 		
@@ -109,7 +109,7 @@ public class HostGUI extends JPanel {
 		
 		tableCapacityText = new JTextArea("");
 		
-		tableCapacityText.setBounds(162, 116, 18, 17);
+		tableCapacityText.setBounds(247, 116, 18, 17);
 
 		this.add(tableCapacityText);
 		
@@ -117,7 +117,7 @@ public class HostGUI extends JPanel {
 		
 		tableCapacityLabel = new JLabel("/ 4");
 		
-		tableCapacityLabel.setBounds(185, 97, 180, 55);
+		tableCapacityLabel.setBounds(270, 97, 180, 55);
 		
 		this.add(tableCapacityLabel);
 		
@@ -127,7 +127,7 @@ public class HostGUI extends JPanel {
 		
 		tableStatusCombo = new JComboBox(tableStatusComboArray);
 
-		tableStatusCombo.setBounds(160, 145, 60, 25);
+		tableStatusCombo.setBounds(245, 145, 60, 25);
 
 		this.add(tableStatusCombo);
 		
@@ -135,7 +135,7 @@ public class HostGUI extends JPanel {
 		
 		updateTableButton = new JButton("Update table");
 		
-		updateTableButton.setBounds(70, 190, 125, 25);	
+		updateTableButton.setBounds(155, 190, 125, 25);	
 		
 		updateTableButton.addActionListener(
 
@@ -221,7 +221,7 @@ public class HostGUI extends JPanel {
 
 		logoutButton = new JButton("Logout");
 
-		logoutButton.setBounds(145, 300, 75, 25);	
+		logoutButton.setBounds(180, 355, 75, 25);
 		
 		logoutButton.addActionListener(
 				

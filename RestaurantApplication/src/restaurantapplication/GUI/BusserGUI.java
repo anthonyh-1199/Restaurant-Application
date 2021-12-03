@@ -166,7 +166,7 @@ public class BusserGUI extends JPanel {
 
 		logoutButton = new JButton("Logout");
 
-		logoutButton.setBounds(165, 130, 75, 25);	
+		logoutButton.setBounds(180, 355, 75, 25);
 		
 		logoutButton.addActionListener(
 				

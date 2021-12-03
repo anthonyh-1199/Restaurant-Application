@@ -42,7 +42,7 @@ public class LoginGUI extends JPanel implements ActionListener {
 		
 		idLabel = new JLabel("Employee ID: ");
 		
-		idLabel.setBounds(50, 50, 80, 25);
+		idLabel.setBounds(74, 50, 80, 25);
 		
 		this.add(idLabel);
 		
@@ -50,7 +50,7 @@ public class LoginGUI extends JPanel implements ActionListener {
 		
 		idField = new JTextField(20);
 		
-		idField.setBounds(135, 50, 165, 25);
+		idField.setBounds(159, 50, 165, 25);
 		
 		this.add(idField);
 		
@@ -58,7 +58,7 @@ public class LoginGUI extends JPanel implements ActionListener {
 		
 		passwordLabel = new JLabel("Password: ");
 		
-		passwordLabel.setBounds(50, 80, 80, 25);
+		passwordLabel.setBounds(74, 80, 80, 25);
 		
 		this.add(passwordLabel);
 		
@@ -66,7 +66,7 @@ public class LoginGUI extends JPanel implements ActionListener {
 		
 		passwordField = new JPasswordField(20);
 		
-		passwordField.setBounds(135, 80, 165, 25);
+		passwordField.setBounds(159, 80, 165, 25);
 		
 		this.add(passwordField);
 		
@@ -74,7 +74,7 @@ public class LoginGUI extends JPanel implements ActionListener {
 		
 		loginButton = new JButton("Login");
 		
-		loginButton.setBounds(145, 120, 65, 25);	
+		loginButton.setBounds(189, 120, 65, 25);	
 		
 		loginButton.addActionListener(this);
 		

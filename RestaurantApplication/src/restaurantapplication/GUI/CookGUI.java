@@ -178,7 +178,7 @@ public class CookGUI extends JPanel {
 
 		logoutButton = new JButton("Logout");
 
-		logoutButton.setBounds(165, 230, 75, 25);	
+		logoutButton.setBounds(180, 355, 75, 25);
 		
 		logoutButton.addActionListener(
 				

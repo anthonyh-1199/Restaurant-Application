@@ -266,7 +266,7 @@ public class ManagerGUI extends JPanel {
 		
 		updateEmployeeButton = new JButton("Update employee");
 		
-		updateEmployeeButton.setBounds(130, 227, 135, 25);
+		updateEmployeeButton.setBounds(147, 227, 135, 25);
 		
 		updateEmployeeButton.addActionListener(
 
@@ -390,7 +390,7 @@ public class ManagerGUI extends JPanel {
 		
 		updateTableButton = new JButton("Update table");
 		
-		updateTableButton.setBounds(125, 225, 105, 25);
+		updateTableButton.setBounds(164, 225, 105, 25);
 		
 		updateTableButton.addActionListener(
 
@@ -464,7 +464,7 @@ public class ManagerGUI extends JPanel {
 
 		logoutButton = new JButton("Logout");
 
-		logoutButton.setBounds(145, 270, 75, 25);	
+		logoutButton.setBounds(180, 355, 75, 25);	
 		
 		logoutButton.addActionListener(
 				

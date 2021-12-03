@@ -322,7 +322,7 @@ public class ServerGUI extends JPanel {
 
 		logoutButton = new JButton("Logout");
 
-		logoutButton.setBounds(145, 300, 75, 25);	
+		logoutButton.setBounds(180, 355, 75, 25);
 		
 		logoutButton.addActionListener(
 				
