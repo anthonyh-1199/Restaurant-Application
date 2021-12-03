@@ -1,7 +1,5 @@
 package restaurantapplication;
 
-import java.util.ArrayList;
-
 public class Order {
 
     /* INITIALIZE VARIABLES */
@@ -60,7 +58,7 @@ public class Order {
     
     public void setDescription(String orderDescription) {
     	
-    	this.orderDescription = orderDescription;
+    	this.orderDescription = orderDescription.replace("\n", "").replace(",", "");
     	
     }
     
@@ -72,7 +70,7 @@ public class Order {
     
     public void setStatus(String orderStatus) {
     	
-    	this.orderStatus = orderStatus;
+    	this.orderStatus = orderStatus.replace("\n", "").replace(",", "");
     	
     }
     

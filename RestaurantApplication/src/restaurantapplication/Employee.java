@@ -66,13 +66,13 @@ public class Employee {
     
     public void setFirstname(String employeeFirstname) {
     	
-    	this.employeeFirstname = employeeFirstname;
+    	this.employeeFirstname = employeeFirstname.replace("\n", "").replace(",", "");
     	
     }
     
     public void setLastname(String employeeLastname) {
     	
-    	this.employeeLastname = employeeLastname;
+    	this.employeeLastname = employeeLastname.replace("\n", "").replace(",", "");
     	
     }
     
@@ -84,7 +84,7 @@ public class Employee {
     
     public void setPassword(String employeePassword) {
     	
-    	this.employeePassword = employeePassword;
+    	this.employeePassword = employeePassword.replace("\n", "").replace(",", "");
     	
     }
     
