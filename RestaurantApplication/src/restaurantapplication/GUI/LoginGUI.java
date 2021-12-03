@@ -8,8 +8,6 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import restaurantapplication.Employee;
-import restaurantapplication.RestaurantApplication;
-import restaurantapplication.RestaurantModel;
 
 public class LoginGUI extends JPanel implements ActionListener {
 	
@@ -29,6 +27,8 @@ public class LoginGUI extends JPanel implements ActionListener {
 		//Assign parameters
 		
 		this.appFrame = appFrame;
+		
+		appFrame.currentUser = null;
 
 		//Format layout
 		
