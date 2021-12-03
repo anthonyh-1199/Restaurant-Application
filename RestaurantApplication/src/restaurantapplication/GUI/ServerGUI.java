@@ -208,13 +208,15 @@ public class ServerGUI extends JPanel {
 					//Set contents of changeOrderText to match the selected item
 					
 					if (updateOrderCombo.getSelectedItem() == null) {
-						
+
 						return;
 						
 					}
 					
 					if (updateOrderCombo.getSelectedItem().toString().equals("")) {
-						
+
+						refreshUpdateOrderCombo();
+
 						updateOrderText.setText("");
 						
 						return;
@@ -224,10 +226,6 @@ public class ServerGUI extends JPanel {
 					String orderDescription = appFrame.getModel().getOrdersMap().get((Integer.parseInt(updateOrderCombo.getSelectedItem().toString()))).getDescription().replace("\\n", "\n");
 
 					updateOrderText.setText(orderDescription);
-					
-					//Refresh updateOrderCombo
-					
-					refreshUpdateOrderCombo();
 
 				}
 
@@ -237,7 +235,7 @@ public class ServerGUI extends JPanel {
 
 		this.add(updateOrderCombo);
 		
-		//Format changeOrderButton
+		//Format updateOrderButton
 		
 		updateOrderButton = new JButton("Update");
 		
