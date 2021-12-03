@@ -21,7 +21,7 @@ public class ApplicationFrame extends JFrame {
     	
     	//Format frame
 
-    	this.setSize(900, 900);
+    	this.setSize(450, 450);
     	this.setResizable(false);
     	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	
