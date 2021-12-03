@@ -61,39 +61,39 @@ public class BusserGUI extends JPanel {
 		
 		selectTableCombo.addActionListener(
 
-				new ActionListener() {
+			new ActionListener() {
 
-					public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent e) {
+					
+					//If the selected item isn't empty, make the table data components visible
+					
+					if (selectTableCombo.getSelectedItem() == null) {
 						
-						//If the selected item isn't empty, make the table data components visible
+						hideTableOptions();
 						
-						if (selectTableCombo.getSelectedItem() == null) {
-							
-							hideTableOptions();
-							
-							return;
-							
-						}
+						return;
 						
-						if (selectTableCombo.getSelectedItem().toString().equals("")) {
-							
-							hideTableOptions();
-							
-							return;
-							
-						}
-
-						Table selectedTable = appFrame.getModel().getTablesMap().get(Integer.parseInt(selectTableCombo.getSelectedItem().toString()));
-						
-						updateTableOptions(selectedTable);
-
-						showTableOptions();
-
 					}
 					
-				}
+					if (selectTableCombo.getSelectedItem().toString().equals("")) {
+						
+						hideTableOptions();
+						
+						return;
+						
+					}
 
-			);
+					Table selectedTable = appFrame.getModel().getTablesMap().get(Integer.parseInt(selectTableCombo.getSelectedItem().toString()));
+					
+					updateTableOptions(selectedTable);
+
+					showTableOptions();
+
+				}
+				
+			}
+
+		);
 
 		this.add(selectTableCombo);
 		
@@ -237,7 +237,5 @@ public class BusserGUI extends JPanel {
 		selectTableCombo.setModel(new DefaultComboBoxModel(list.toArray()));
 
 	}
-	
 
-	
 }
