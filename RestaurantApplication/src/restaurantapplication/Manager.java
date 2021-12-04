@@ -52,7 +52,7 @@ public class Manager extends Employee {
 	
 	public void removeTable(Table table, RestaurantModel model) {
 		
-		model.getEmployeesMap().remove(table.getNumber());
+		model.getTablesMap().remove(table.getNumber());
 		
 		model.updateTables();
 		
