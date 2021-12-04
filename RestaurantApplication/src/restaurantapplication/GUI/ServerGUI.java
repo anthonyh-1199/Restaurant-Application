@@ -17,9 +17,11 @@ public class ServerGUI extends JPanel {
 	private JButton addOrderButton;
 	private JButton updateOrderButton;
 	private JButton logoutButton;
+	private JComboBox pickupOrderCombo;
 	private JComboBox updateOrderCombo;
 	private JLabel addOrderLabel;
 	private JLabel addTableLable;
+	private JLabel pickupOrderLabel;
 	private JLabel updateOrderLabel;
 	private JTextArea addOrderText;
 	private JTextArea addTableText;
@@ -28,6 +30,8 @@ public class ServerGUI extends JPanel {
 	private JScrollPane updateOrderScroll;
 	private JScrollPane addOrderScroll;
 	private Server currentUser;
+
+	private JButton pickupOrderButton;
 
 	/* CONSTRUCTOR */
 
@@ -117,7 +121,7 @@ public class ServerGUI extends JPanel {
 						
 						tableId = Integer.parseInt(addTableText.getText());
 
-						if (!(appFrame.getModel().getEmployeesMap()).containsKey(tableId)) {
+						if (!(appFrame.getModel().getTablesMap()).containsKey(tableId)) {
 							
 							JOptionPane.showMessageDialog(ServerGUI.this,
 									"Error: Table ID not found.",
@@ -318,6 +322,98 @@ public class ServerGUI extends JPanel {
 		
 		this.add(updateOrderScroll);
 
+		//Format pickupOrderLabel
+		
+		pickupOrderLabel = new JLabel("Pick up order:");
+		
+		pickupOrderLabel.setBounds(50, 302, 140, 20);
+		
+		this.add(pickupOrderLabel);
+		
+		//Format pickupOrderCombo
+		
+		pickupOrderCombo = new JComboBox();
+		
+		refreshPickupOrderCombo();
+		
+		pickupOrderCombo.setBounds(138, 300, 165, 25);
+		
+		pickupOrderCombo.addActionListener(
+			
+			new ActionListener() {
+				
+				public void actionPerformed(ActionEvent e) {
+					
+					//If the selected item isn't empty, make the pickupOrderButton visible
+					
+					if (pickupOrderCombo.getSelectedItem() == null) {
+
+						return;
+						
+					}
+					
+					if (pickupOrderCombo.getSelectedIndex() == 0) {
+						
+						pickupOrderButton.setVisible(false);
+						
+						return;
+						
+					}
+					
+					pickupOrderButton.setVisible(true);
+
+				}
+				
+			}
+			
+		);
+	
+		this.add(pickupOrderCombo);
+		
+		//Format pickupOrderButton
+		
+		pickupOrderButton = new JButton("Pick up order");
+
+		pickupOrderButton.setBounds(310, 300, 110, 25);
+		
+		pickupOrderButton.addActionListener(
+			
+			new ActionListener() {
+				
+				public void actionPerformed(ActionEvent e) {
+					
+					//Set the status of the selected order as "Completed"
+					
+					int orderId = new Scanner(pickupOrderCombo.getSelectedItem().toString()).useDelimiter("\\D+").nextInt();
+					
+					Order order = appFrame.getModel().getOrdersMap().get(orderId);
+							
+					currentUser.setOrderStatus(order, "Completed");
+					
+					//Update the model
+					
+					appFrame.getModel().updateOrders();
+					
+					//Show success message
+					
+					JOptionPane.showMessageDialog(ServerGUI.this,
+							"Success: Order has been completed.",
+						    "Success",
+						    JOptionPane.PLAIN_MESSAGE);
+					
+					//Reset components
+					
+					refreshPickupOrderCombo();
+					pickupOrderButton.setVisible(false);
+
+				}
+				
+			}
+			
+		);
+		
+		this.add(pickupOrderButton);
+
 		//Format logoutButton
 
 		logoutButton = new JButton("Logout");
@@ -339,6 +435,10 @@ public class ServerGUI extends JPanel {
 		);
 		
 		this.add(logoutButton);
+		
+		//Hide components by default
+		
+		pickupOrderButton.setVisible(false);
 		
 	}
 
@@ -365,6 +465,32 @@ public class ServerGUI extends JPanel {
 		}
 		
 		updateOrderCombo.setModel(new DefaultComboBoxModel(list.toArray()));
+
+	}
+	
+	private void refreshPickupOrderCombo() {
+		
+		pickupOrderCombo.removeAllItems();
+		
+		HashMap<Integer, Order> orders = (appFrame.getModel().getOrdersMap());
+		
+		List<String> list = new ArrayList<String>();
+		
+		list.add("");
+		
+		for (Integer key : orders.keySet()) {
+
+			//If the order is not completed, add it to the list
+			
+			if (orders.get(key).getStatus().equals("Ready for pickup")) {
+				
+				list.add("Order #" + key.toString() + " for table #" + orders.get(key).getTableId());
+
+			}
+			
+		}
+		
+		pickupOrderCombo.setModel(new DefaultComboBoxModel(list.toArray()));
 
 	}
 	
