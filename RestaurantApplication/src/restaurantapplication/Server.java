@@ -27,6 +27,14 @@ public class Server extends Employee {
 		model.updateOrders();
 
 	}
+	
+	//Changes the current status of an Order object
+	
+	public void setOrderStatus(Order order, String status) {
+
+		order.setStatus(status);
+
+	}
 
 	//Removes an order entry from the RestaurantModel's ordersMap
 
