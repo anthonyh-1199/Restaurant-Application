@@ -1,3 +1,5 @@
 number,description,table,status
-1,Chicken sandwich\nMedium fries\nLarge diet coke,1,In the kitchen
-2,Cheeseburger (no pickles)\nBaked potato\nSteamed broccoli\nSweet tea,1,In the kitchen
+1,Chicken sandwich\nMedium fries\nLarge lemonade,1,Ready for pickup
+2,Cheeseburger (no pickles)\nBaked potato\nSteamed broccoli\nSweet tea,1,Ready for pickup
+3,Cheeseburger\nSteak (medium rare)\nBaked potato\nMac and cheese\nSweet tea\nWater,3,In the kitchen
+4,Chicken tenders\nLarge fries\nWater,5,In the kitchen
