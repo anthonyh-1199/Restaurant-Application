@@ -3,7 +3,9 @@ package restaurantapplication.GUI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -18,13 +20,20 @@ public class ManagerGUI extends JPanel {
 	/* INITIALIZE VARIABLES */
 
 	private ApplicationFrame appFrame;
+	private JButton deleteRecordButton;
 	private JButton logoutButton;
 	private JButton updateEmployeeButton;
 	private JButton updateTableButton;
+	private JButton createEmployeeButton;
+	private JButton createTableButton;
+	private JComboBox deleteRecordIdCombo;
+	private JComboBox deleteRecordTypeCombo;
 	private JComboBox employeePositionCombo;
 	private JComboBox tableStatusCombo;
 	private JComboBox updateRecordIdCombo;
 	private JComboBox updateRecordTypeCombo;
+	private JLabel createRecordLabel;
+	private JLabel deleteRecordLabel;
 	private JLabel employeeNameLabel;
 	private JLabel employeePasswordLabel;
 	private JLabel employeePositionLabel;
@@ -162,7 +171,7 @@ public class ManagerGUI extends JPanel {
 							
 								case "Employee":
 									
-									//Set table options to the selected table
+									//Set table options to the selected employee
 									
 									Employee selectedEmployee = appFrame.getModel().getEmployeesMap().get(Integer.parseInt(updateRecordIdCombo.getSelectedItem().toString()));
 									
@@ -316,15 +325,20 @@ public class ManagerGUI extends JPanel {
 						    "Success",
 						    JOptionPane.PLAIN_MESSAGE);
 					
-					//Hide table data
+					//Refresh ComboBox components
 					
-					hideTableOptions();
-
-					tableStatusCombo.setSelectedIndex(0);
-
-					//Refresh updateOrderCombo
-
+					updateRecordTypeCombo.setSelectedIndex(0);
+					deleteRecordTypeCombo.setSelectedIndex(0);
 					refreshUpdateRecordIdCombo();
+					refreshDeleteRecordIdCombo();
+					
+					//Hide components
+					
+					deleteRecordIdCombo.setVisible(false);
+					deleteRecordButton.setVisible(false);
+					updateRecordIdCombo.setVisible(false);
+					hideEmployeeOptions();
+					hideTableOptions();
 
 				}
 				
@@ -442,15 +456,20 @@ public class ManagerGUI extends JPanel {
 						    "Success",
 						    JOptionPane.PLAIN_MESSAGE);
 					
-					//Hide table data
+					//Refresh ComboBox components
 					
-					hideTableOptions();
-
-					tableStatusCombo.setSelectedIndex(0);
-
-					//Refresh updateOrderCombo
-
+					updateRecordTypeCombo.setSelectedIndex(0);
+					deleteRecordTypeCombo.setSelectedIndex(0);
 					refreshUpdateRecordIdCombo();
+					refreshDeleteRecordIdCombo();
+					
+					//Hide components
+					
+					deleteRecordIdCombo.setVisible(false);
+					deleteRecordButton.setVisible(false);
+					updateRecordIdCombo.setVisible(false);
+					hideEmployeeOptions();
+					hideTableOptions();
 
 				}
 				
@@ -459,6 +478,462 @@ public class ManagerGUI extends JPanel {
 		);
 	
 		this.add(updateTableButton);
+
+		//Format createRecordLabel
+		
+		createRecordLabel = new JLabel("Create new record:");
+		
+		createRecordLabel.setBounds(50, 268, 130, 25);
+		
+		this.add(createRecordLabel);
+		
+		//Format createEmployeeButton
+		
+		createEmployeeButton = new JButton("Create employee");
+		
+		createEmployeeButton.setBounds(168, 268, 130, 25);
+		
+		createEmployeeButton.addActionListener(
+
+			new ActionListener() {
+				
+				public void actionPerformed(ActionEvent e) {
+					
+					int createPane = JOptionPane.showOptionDialog(
+							ManagerGUI.this, 
+							"Are you sure you want to create a new employee record?", 
+							"Alert", 
+							JOptionPane.OK_CANCEL_OPTION, 
+							JOptionPane.WARNING_MESSAGE, 
+							null, 
+							null, 
+							null);
+
+					if (createPane == JOptionPane.OK_OPTION) {
+						
+						//Get the first available Table record ID
+
+						List<Integer> employeeIds = new ArrayList<Integer>(appFrame.getModel().getEmployeesMap().keySet());
+						
+						int newEmployeeId = employeeIds.size() + 1;
+						
+						Collections.sort(employeeIds);
+						
+						for (int i = 0; i < employeeIds.size(); i++) {
+
+							if (employeeIds.get(i) != i + 1) {
+
+								newEmployeeId = i + 1;
+
+								break;
+								
+							}
+							
+						}
+						
+						//Create a default Table object with the new ID
+						
+						Employee employee = new Employee(newEmployeeId, "First", "Last", "busser", "password");
+						
+						//Add the employee to the model
+						
+						currentUser.addEmployee(employee, appFrame.getModel());
+						
+						//Show success message
+
+						JOptionPane.showMessageDialog(ManagerGUI.this,
+								"Success: A new employee with ID #" + newEmployeeId + " has been created.",
+							    "Success",
+							    JOptionPane.INFORMATION_MESSAGE);
+						
+					}
+					
+					//Refresh ComboBox components
+					
+					updateRecordTypeCombo.setSelectedIndex(0);
+					deleteRecordTypeCombo.setSelectedIndex(0);
+					refreshUpdateRecordIdCombo();
+					refreshDeleteRecordIdCombo();
+					
+					//Hide components
+					
+					deleteRecordIdCombo.setVisible(false);
+					deleteRecordButton.setVisible(false);
+					updateRecordIdCombo.setVisible(false);
+					hideEmployeeOptions();
+					hideTableOptions();
+
+				}
+				
+			}
+			
+		);
+	
+		this.add(createEmployeeButton);
+		
+		//Format createTableButton
+		
+		createTableButton = new JButton("Create table");
+		
+		createTableButton.setBounds(306, 268, 105, 25);
+		
+		createTableButton.addActionListener(
+
+			new ActionListener() {
+				
+				public void actionPerformed(ActionEvent e) {
+					
+					int createPane = JOptionPane.showOptionDialog(
+							ManagerGUI.this, 
+							"Are you sure you want to create a new table record?", 
+							"Alert", 
+							JOptionPane.OK_CANCEL_OPTION, 
+							JOptionPane.WARNING_MESSAGE, 
+							null, 
+							null, 
+							null);
+
+					if (createPane == JOptionPane.OK_OPTION) {
+						
+						//Get the first available Table record ID
+
+						List<Integer> tableIds = new ArrayList<Integer>(appFrame.getModel().getTablesMap().keySet());
+						
+						int newTableId = tableIds.size() + 1;
+						
+						Collections.sort(tableIds);
+						
+						for (int i = 0; i < tableIds.size(); i++) {
+
+							if (tableIds.get(i) != i + 1) {
+
+								newTableId = i + 1;
+
+								break;
+								
+							}
+							
+						}
+						
+						//Create a default Table object with the new ID
+						
+						Table table = new Table(newTableId, 4, true);
+						
+						//Add the table to the model
+						
+						currentUser.addTable(table, appFrame.getModel());
+
+						//Show success message
+
+						JOptionPane.showMessageDialog(ManagerGUI.this,
+								"Success: A new table with ID #" + newTableId + " has been created.",
+							    "Success",
+							    JOptionPane.INFORMATION_MESSAGE);
+						
+					}
+					
+					//Refresh ComboBox components
+					
+					updateRecordTypeCombo.setSelectedIndex(0);
+					deleteRecordTypeCombo.setSelectedIndex(0);
+					refreshUpdateRecordIdCombo();
+					refreshDeleteRecordIdCombo();
+					
+					//Hide components
+					
+					deleteRecordIdCombo.setVisible(false);
+					deleteRecordButton.setVisible(false);
+					updateRecordIdCombo.setVisible(false);
+					hideEmployeeOptions();
+					hideTableOptions();
+
+				}
+				
+			}
+			
+		);
+	
+		this.add(createTableButton);
+
+		//Format deleteRecordLabel
+		
+		deleteRecordLabel = new JLabel("Delete record:");
+		
+		deleteRecordLabel.setBounds(50, 311, 130, 25);
+		
+		this.add(deleteRecordLabel);
+		
+		//Format updateRecordTypeCombo
+		
+		String[] deleteRecordTypeComboArray = new String[]{"", "Employee", "Table"};
+		
+		deleteRecordTypeCombo = new JComboBox(deleteRecordTypeComboArray);
+
+		deleteRecordTypeCombo.setBounds(139, 311, 90, 25);
+		
+		deleteRecordTypeCombo.addActionListener(
+			
+			new ActionListener() {
+				
+				public void actionPerformed(ActionEvent e) {
+					
+					//If the selected item isn't empty, make the table data components visible
+					
+					if (deleteRecordTypeCombo.getSelectedItem() == null) {
+
+						return;
+						
+					}
+
+					switch (deleteRecordTypeCombo.getSelectedItem().toString()) {
+					
+						case "Employee":
+						case "Table":
+							
+							deleteRecordIdCombo.setVisible(true);
+
+							break;
+
+						default:
+							
+							deleteRecordIdCombo.setVisible(false);
+							
+							hideEmployeeOptions();
+							
+							hideTableOptions();
+							
+							break;
+					
+					}
+					
+					deleteRecordButton.setVisible(false);
+					
+					refreshDeleteRecordIdCombo();
+				
+				}
+				
+			}
+			
+		);
+	
+		this.add(deleteRecordTypeCombo);
+		
+		//Format deleteRecordIdCombo
+		
+		String[] deleteRecordIdComboArray = new String[]{};
+		
+		deleteRecordIdCombo = new JComboBox(deleteRecordIdComboArray);
+
+		deleteRecordIdCombo.setBounds(238, 311, 45, 25);
+		
+		deleteRecordIdCombo.addActionListener(
+			
+			new ActionListener() {
+				
+				public void actionPerformed(ActionEvent e) {
+					
+					//If the selected item isn't empty, make the table data components visible
+					
+					if (deleteRecordIdCombo.getSelectedItem() == null) {
+
+						return;
+						
+					}
+
+					switch (deleteRecordIdCombo.getSelectedItem().toString()) {
+					
+						case "":
+							
+							deleteRecordButton.setVisible(false);
+							
+						default:
+							
+							if (deleteRecordIdCombo.getSelectedItem().toString().equals("")) {
+								
+								deleteRecordButton.setVisible(false);
+								
+								break;
+								
+							}
+							
+							switch (deleteRecordTypeCombo.getSelectedItem().toString()) {
+							
+								//Show the deleteRecordButton component with the appropriate text
+							
+								case "Employee":
+									
+									deleteRecordButton.setText("Delete employee");
+									
+									deleteRecordButton.setVisible(true);
+									
+									break;
+									
+								case "Table":
+
+									//Set table options to the selected table
+									
+									deleteRecordButton.setText("Delete table");
+									
+									deleteRecordButton.setVisible(true);
+									
+									break;
+							
+							}
+
+							break;
+					
+					}
+					
+					//Refresh ComboBox components
+					
+					updateRecordTypeCombo.setSelectedIndex(0);;
+					refreshUpdateRecordIdCombo();
+					
+					//Hide components
+
+					updateRecordIdCombo.setVisible(false);
+					hideEmployeeOptions();
+					hideTableOptions();
+
+				}
+				
+			}
+			
+		);
+		
+		this.add(deleteRecordIdCombo);
+		
+		//Format deleteRecordButton
+		
+		deleteRecordButton = new JButton("Delete employee");
+		
+		deleteRecordButton.setBounds(292, 311, 130, 25);
+
+		deleteRecordButton.addActionListener(
+			
+			new ActionListener() {
+				
+				public void actionPerformed(ActionEvent e) {
+					
+					//Delete the chosen record of the selected type with the selected id
+					
+					switch (deleteRecordTypeCombo.getSelectedItem().toString()) {
+						
+						case "Employee":
+							
+							//Get the id of the selected employee
+							
+							int employeeId = Integer.parseInt(deleteRecordIdCombo.getSelectedItem().toString());
+							
+							//Security check - employees cannot delete their owns records
+							
+							if (employeeId == currentUser.getId()) {
+								
+								JOptionPane.showMessageDialog(ManagerGUI.this,
+										"Forbidden: Users cannot delete their own records.",
+									    "Forbidden Action",
+									    JOptionPane.ERROR_MESSAGE);
+								
+								return;
+								
+							}
+							
+							//Get the selected employee
+							
+							Employee selectedEmployee = appFrame.getModel().getEmployeesMap().get(employeeId);
+							
+							//Show warning message
+							
+							int deleteEmployeePane = JOptionPane.showOptionDialog(
+									ManagerGUI.this, 
+									"Are you sure you want to delete employee #" + selectedEmployee.getId() + " - " + selectedEmployee.getFirstname() + " " + selectedEmployee.getLastname() + "?", 
+									"Alert", 
+									JOptionPane.OK_CANCEL_OPTION, 
+									JOptionPane.WARNING_MESSAGE, 
+									null, 
+									null, 
+									null);
+
+							if (deleteEmployeePane == JOptionPane.OK_OPTION) {
+								
+								//Remove the Employee from the model
+								
+								currentUser.removeEmployee(selectedEmployee, appFrame.getModel());
+								
+								//Show success message
+
+								JOptionPane.showMessageDialog(ManagerGUI.this,
+										"Success: Employee #" + employeeId + " has been deleted from the database.",
+									    "Success",
+									    JOptionPane.INFORMATION_MESSAGE);
+								
+							}
+
+							break;
+							
+						case "Table":
+	
+							//Get the id of the selected employee
+							
+							int tableId = Integer.parseInt(deleteRecordIdCombo.getSelectedItem().toString());
+
+							//Get the selected employee
+							
+							Table selectedTable = appFrame.getModel().getTablesMap().get(tableId);
+							
+							//Show warning message
+							
+							int deleteTablePane = JOptionPane.showOptionDialog(
+									ManagerGUI.this, 
+									"Are you sure you want to delete table #" + tableId + "?", 
+									"Alert", 
+									JOptionPane.OK_CANCEL_OPTION, 
+									JOptionPane.WARNING_MESSAGE, 
+									null, 
+									null, 
+									null);
+
+							if (deleteTablePane == JOptionPane.OK_OPTION) {
+								
+								//Remove the Employee from the model
+								
+								currentUser.removeTable(selectedTable, appFrame.getModel());
+								
+								//Show success message
+
+								JOptionPane.showMessageDialog(ManagerGUI.this,
+										"Success: Table #" + tableId + " has been deleted from the database.",
+									    "Success",
+									    JOptionPane.INFORMATION_MESSAGE);
+								
+							}
+
+							break;
+
+					}
+					
+					//Refresh ComboBox components
+					
+					updateRecordTypeCombo.setSelectedIndex(0);
+					deleteRecordTypeCombo.setSelectedIndex(0);
+					refreshUpdateRecordIdCombo();
+					refreshDeleteRecordIdCombo();
+					
+					//Hide components
+					
+					deleteRecordIdCombo.setVisible(false);
+					deleteRecordButton.setVisible(false);
+					updateRecordIdCombo.setVisible(false);
+					hideEmployeeOptions();
+					hideTableOptions();
+
+				}
+				
+			}
+			
+		);
+
+		this.add(deleteRecordButton);
 
 		//Format loginButton
 
@@ -485,9 +960,12 @@ public class ManagerGUI extends JPanel {
 		//Refresh ComboBox components to initial values
 		
 		refreshUpdateRecordIdCombo();
+		refreshDeleteRecordIdCombo();
 		
 		//Hide components by default
 		
+		deleteRecordIdCombo.setVisible(false);
+		deleteRecordButton.setVisible(false);
 		updateRecordIdCombo.setVisible(false);
 		hideEmployeeOptions();
 		hideTableOptions();
@@ -613,6 +1091,49 @@ public class ManagerGUI extends JPanel {
 		}
 
 		updateRecordIdCombo.setModel(new DefaultComboBoxModel(list.toArray()));
+		
+		hideEmployeeOptions();
+		hideTableOptions();
+
+	}
+	
+	private void refreshDeleteRecordIdCombo() {
+		
+		deleteRecordIdCombo.removeAllItems();
+		
+		//Initialize new combo values
+		
+		List<String> list = new ArrayList<String>();
+		
+		list.add("");
+
+		//Parse the relevant HashMap from the model according to updateRecordTypeCombo
+
+		switch (deleteRecordTypeCombo.getSelectedIndex()) {
+		
+			case 1:
+
+				for (Integer key : (appFrame.getModel().getEmployeesMap()).keySet()) {
+
+					list.add(key.toString());
+
+				}
+				
+				break;
+				
+			case 2:
+
+				for (Integer key : (appFrame.getModel().getTablesMap()).keySet()) {
+
+					list.add(key.toString());
+
+				}
+				
+				break;
+		
+		}
+
+		deleteRecordIdCombo.setModel(new DefaultComboBoxModel(list.toArray()));
 		
 		hideEmployeeOptions();
 		hideTableOptions();
