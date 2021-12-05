@@ -22,6 +22,7 @@ public class HostGUI extends JPanel {
 	private JLabel selectedTableLabel;
 	private JLabel tableCapacityLabel;
 	private JTextArea tableCapacityText;
+        private int maxCapacity = 0;
 
 	private Host currentUser;
 	
@@ -115,7 +116,7 @@ public class HostGUI extends JPanel {
 		
 		//Format tableCapacityLabel
 		
-		tableCapacityLabel = new JLabel("/ 4");
+		tableCapacityLabel = new JLabel("/" + maxCapacity);
 		
 		tableCapacityLabel.setBounds(270, 97, 180, 55);
 		
@@ -176,21 +177,21 @@ public class HostGUI extends JPanel {
 
 					Table currentTable = appFrame.getModel().getTablesMap().get(Integer.parseInt(selectTableCombo.getSelectedItem().toString()));
 					
+                                        maxCapacity = currentTable.getMaximumCapacity();
 					//Update the capacity and status of the Table object
 					
 					currentUser.setTableCapacity(currentTable, tableCapacity);
-					
-					if (tableStatusCombo.getSelectedIndex() == 0) {
+					if (tableCapacity > 0 && tableCapacity <= maxCapacity ){
+                                            if (tableStatusCombo.getSelectedIndex() == 0) {
 						
 						currentUser.setTableStatus(currentTable, true);
 						
-					} else {
+                                            } else {
 					
 						currentUser.setTableStatus(currentTable, false);
 					
-					}
-					
-					//Update the model
+					} 
+                                            //Update the model
 					
 					appFrame.getModel().updateTables();
 					
@@ -201,6 +202,13 @@ public class HostGUI extends JPanel {
 						    "Success",
 						    JOptionPane.PLAIN_MESSAGE);
 					
+                                        }
+                                        else {
+                                            JOptionPane.showMessageDialog(HostGUI.this,
+								"Error: Invalid table capacity.",
+								    "Error",
+								    JOptionPane.ERROR_MESSAGE);
+                                        }
 					//Hide table data
 
 					hideTableData();
@@ -208,7 +216,6 @@ public class HostGUI extends JPanel {
 					//Refresh updateOrderCombo
 
 					refreshSelectTableCombo();
-
 				}
 				
 			}
