@@ -182,7 +182,7 @@ public class HostGUI extends JPanel {
 					
 					currentUser.setTableCapacity(currentTable, tableCapacity);
 					if (tableCapacity > -1 && tableCapacity <= maxCapacity ){
-                                            if (tableStatusCombo.getSelectedIndex() == 0) {
+                                            if (tableCapacity == 0) {
 						
 						currentUser.setTableStatus(currentTable, true);
 						
