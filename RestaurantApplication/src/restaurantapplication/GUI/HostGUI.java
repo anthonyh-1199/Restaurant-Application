@@ -22,8 +22,6 @@ public class HostGUI extends JPanel {
 	private JLabel selectedTableLabel;
 	private JLabel tableCapacityLabel;
 	private JTextArea tableCapacityText;
-        private int maxCapacity = 0;
-
 	private Host currentUser;
 	
 	/* CONSTRUCTOR */
@@ -62,39 +60,39 @@ public class HostGUI extends JPanel {
 		
 		selectTableCombo.addActionListener(
 
-				new ActionListener() {
+			new ActionListener() {
 
-					public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent e) {
+					
+					//If the selected item isn't empty, make the table data components visible
+					
+					if (selectTableCombo.getSelectedItem() == null) {
 						
-						//If the selected item isn't empty, make the table data components visible
+						hideTableData();
 						
-						if (selectTableCombo.getSelectedItem() == null) {
-							
-							hideTableData();
-							
-							return;
-							
-						}
+						return;
 						
-						if (selectTableCombo.getSelectedItem().toString().equals("")) {
-							
-							hideTableData();
-							
-							return;
-							
-						}
-
-						Table selectedTable = appFrame.getModel().getTablesMap().get(Integer.parseInt(selectTableCombo.getSelectedItem().toString()));
-						
-						updateTableData(selectedTable);
-
-						showTableData();
-
 					}
+					
+					if (selectTableCombo.getSelectedItem().toString().equals("")) {
+						
+						hideTableData();
+						
+						return;
+						
+					}
+
+					Table selectedTable = appFrame.getModel().getTablesMap().get(Integer.parseInt(selectTableCombo.getSelectedItem().toString()));
+					
+					updateTableData(selectedTable);
+
+					showTableData();
 
 				}
 
-			);
+			}
+
+		);
 
 		this.add(selectTableCombo);
 		
@@ -116,7 +114,7 @@ public class HostGUI extends JPanel {
 		
 		//Format tableCapacityLabel
 		
-		tableCapacityLabel = new JLabel("/" + maxCapacity);
+		tableCapacityLabel = new JLabel();
 		
 		tableCapacityLabel.setBounds(270, 97, 180, 55);
 		
@@ -177,38 +175,62 @@ public class HostGUI extends JPanel {
 
 					Table currentTable = appFrame.getModel().getTablesMap().get(Integer.parseInt(selectTableCombo.getSelectedItem().toString()));
 					
-                                        maxCapacity = currentTable.getMaximumCapacity();
-					//Update the capacity and status of the Table object
-					
-					currentUser.setTableCapacity(currentTable, tableCapacity);
-					if (tableCapacity > -1 && tableCapacity <= maxCapacity ){
-                                            if (tableCapacity == 0) {
+                    int maxCapacity = currentTable.getMaximumCapacity();
+                    
+					//Check if the new capacity is within the ranges of 0 and maxCapacity
+
+					if (tableCapacity > -1 && tableCapacity <= maxCapacity ) {
 						
-						currentUser.setTableStatus(currentTable, true);
+						//If the table is empty, set its status to the selected status. If the table is not empty, default to 'dirty'
+
+                        if (tableCapacity == 0) {
+
+        					if (tableStatusCombo.getSelectedIndex() == 0) {
+
+        						currentUser.setTableStatus(currentTable, true);
+
+        					} else {
+
+        						currentUser.setTableStatus(currentTable, false);
+
+        					}
+
+                        } else {
+
+                        	currentUser.setTableStatus(currentTable, false);
+
+                        } 
+                        
+                        //Update the capacity of the table
+                        
+                        currentUser.setTableCapacity(currentTable, tableCapacity);
+
+	                    //Update the model
 						
-                                            } else {
-					
-						currentUser.setTableStatus(currentTable, false);
-					
-					} 
-                                            //Update the model
-					
-					appFrame.getModel().updateTables();
-					
-					//Show successful dialog box
-					
-					JOptionPane.showMessageDialog(HostGUI.this,
-							"Table successfully updated.",
-						    "Success",
-						    JOptionPane.PLAIN_MESSAGE);
-					
-                                        }
-                                        else {
-                                            JOptionPane.showMessageDialog(HostGUI.this,
+						appFrame.getModel().updateTables();
+						
+						//Show successful dialog box
+						
+						JOptionPane.showMessageDialog(HostGUI.this,
+								"Table successfully updated.",
+							    "Success",
+							    JOptionPane.PLAIN_MESSAGE);
+						
+                    } else {
+                    	
+                        JOptionPane.showMessageDialog(HostGUI.this,
 								"Error: Invalid table capacity.",
-								    "Error",
-								    JOptionPane.ERROR_MESSAGE);
-                                        }
+							    "Error",
+							    JOptionPane.ERROR_MESSAGE);
+                        
+                        return;
+                        
+                    }
+					
+					//Update tableCapacityLabel
+					
+					tableCapacityLabel.setText("/ " + maxCapacity);
+					
 					//Hide table data
 
 					hideTableData();
@@ -216,6 +238,7 @@ public class HostGUI extends JPanel {
 					//Refresh updateOrderCombo
 
 					refreshSelectTableCombo();
+					
 				}
 				
 			}
